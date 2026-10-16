@@ -219,12 +219,12 @@ h2{font-size:clamp(34px,4.2vw,50px)}
 @media (max-width:720px){
   body{font-size:18px}
   .wrap{padding:0 20px}
-  .hero .wrap{min-height:0;flex-direction:column;align-items:center;padding-top:28px;padding-bottom:0}
+  .hero .wrap{min-height:0;flex-direction:column;align-items:center;padding-top:28px;padding-bottom:26px}
   .hero .lockup{width:min(86%,370px);margin:0}
   .hero{overflow:visible}
-  .hero .art{position:relative;right:auto;bottom:auto;height:auto;width:min(72%,300px);margin:-44px -6px 0 auto;-webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent);mask-image:linear-gradient(to bottom,#000 70%,transparent)}
-  .hero .art img{width:100%;height:auto}
-  .intro{padding:0 0 36px;margin-top:-34px;background:transparent}
+  /* David 2026-10-16: no church art on mobile; the lockup stands alone and the date/buttons move up */
+  .hero .art{display:none}
+  .intro{padding:0 0 36px;margin-top:0;background:transparent}
   .intro .date{letter-spacing:.2em}
   .intro .place{font-size:17.5px}
   .intro .place .sep{display:none}
