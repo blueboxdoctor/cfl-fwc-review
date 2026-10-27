@@ -236,6 +236,43 @@ h2{font-size:clamp(34px,4.2vw,50px)}
 @media (max-width:1120px) and (min-width:721px){ .hero .art{height:100%;right:-56px} }
 @media (max-width:1020px){ .chapters{grid-template-columns:repeat(3,1fr)} .travel{grid-template-columns:1fr 1fr} }
 @media (max-width:900px){ .speakers{grid-template-columns:1fr 1fr} .venue{grid-template-columns:1fr} .site-nav nav{display:none} }
+/* FAQ (David 2026-10-27): category tabs + closed accordion so the section stays short */
+.faq-wrap{max-width:860px;margin:0 auto}
+.faq-tabs{display:flex;gap:8px;justify-content:center;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px;margin:0 0 18px}
+.faq-tabs::-webkit-scrollbar{display:none}
+.faq-tabs button{flex:none;font:600 13.5px/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;padding:11px 18px;border-radius:999px;border:1px solid var(--rule);background:var(--card);color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.faq-tabs button .ct{margin-left:7px;letter-spacing:0;color:var(--muted);font-weight:500}
+.faq-tabs button:hover{border-color:var(--ink)}
+.faq-tabs button[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.faq-tabs button[aria-selected="true"] .ct{color:#CDBFA6}
+.faq-list{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:2px clamp(18px,3.5vw,36px)}
+.faq-list[hidden]{display:none}
+.faq-list details{border-bottom:1px solid var(--rule);scroll-margin-top:80px}
+.faq-list details:last-child{border-bottom:0}
+.faq-list summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 0;font-family:var(--display);font-size:21px;line-height:1.3;color:var(--ink)}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary:hover{color:var(--red)}
+.faq-list summary:focus-visible{outline:2px solid var(--red);outline-offset:4px;border-radius:4px}
+.faq-list .pm{flex:none;position:relative;width:26px;height:26px;border:1px solid var(--rule);border-radius:50%;background:var(--paper)}
+.faq-list .pm::before,.faq-list .pm::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;background:var(--red);transform:translate(-50%,-50%);transition:transform .2s}
+.faq-list .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+.faq-list details[open] .pm::after{transform:translate(-50%,-50%) rotate(0deg)}
+.faq-list details[open] summary{color:var(--red)}
+.faq-list .a{padding:0 0 18px;font-size:17.5px;line-height:1.6;color:var(--ink-2)}
+.faq-list .a p{margin:0 0 10px}
+.faq-list .a > :last-child{margin-bottom:0}
+.faq-list .a ul{margin:0 0 10px;padding-left:20px}
+.faq-list .a li{margin:0 0 4px}
+.faq-list .eats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:4px 0 12px}
+.faq-list .eats div{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:12px 14px}
+.faq-list .eats h5{margin:0 0 6px;font:600 12.5px/1.3 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.faq-list .eats h5 span{display:block;letter-spacing:0;text-transform:none;font-weight:500;font-size:14px;color:var(--muted)}
+.faq-list .eats ul{list-style:none;padding:0;margin:0;font-size:15.5px;line-height:1.45}
+.faq-list .eats li{margin:0 0 8px}
+.faq-list .eats li:last-child{margin:0}
+.faq-list .eats a{font-weight:600;color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(157,49,34,.4)}
+.faq-more{text-align:center;color:var(--muted);margin:20px 0 0;font-size:17px}
+
 @media (max-width:720px){
   body{font-size:18px}
   .wrap{padding:0 20px}
@@ -290,6 +327,12 @@ h2{font-size:clamp(34px,4.2vw,50px)}
   .sp-row .tx{flex:1 1 calc(100% - 60px)}
   .sp-row .amt{flex:1 1 100%;text-align:left;padding-left:50px;font-size:22px}
   .incl ul{grid-template-columns:1fr}
+  .faq-tabs{justify-content:flex-start;margin-left:-20px;margin-right:-20px;padding:2px 20px 4px}
+  .faq-tabs button{padding:10px 14px;font-size:12.5px}
+  .faq-list{padding:2px 16px}
+  .faq-list summary{font-size:18.5px;padding:14px 0;gap:12px}
+  .faq-list .a{font-size:16.5px}
+  .faq-list .eats{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
@@ -327,6 +370,7 @@ h2{font-size:clamp(34px,4.2vw,50px)}
       <li><a class="tab" href="#venue">Venue</a></li>
       <li><a class="tab" href="#travel">Lodging &amp; Travel</a></li>
       <li><a class="tab" href="#register">Pricing</a></li>
+      <li><a class="tab" href="#faq">FAQ</a></li>
       <li><a class="tab" href="#partner">Partner</a></li>
     </ul>
     <a class="btn btn-red" href="#register">Register</a>
@@ -596,7 +640,7 @@ h2{font-size:clamp(34px,4.2vw,50px)}
       <div><h4>Flying in</h4><p>Fly into Cincinnati/Northern Kentucky International (CVG), about 25 minutes from the church.</p></div>
       <div><h4>Arrival &amp; departure</h4><p>Registration opens Monday at 12:00 PM and the program begins at 1:00 PM. We conclude Friday at 4:50&nbsp;PM.</p></div>
       <div><h4>Meals</h4><p>Lunch is provided Tuesday through Friday, with coffee and light refreshments each morning. Dinners are on your own.</p></div>
-      <div><h4>Parking</h4><p><em>Placeholder:</em> parking details for the church campus coming soon.</p></div>
+      <div><h4>Parking</h4><p>Free parking is available at the church for all conference attendees.</p></div>
     </div>
   </div>
 </section>
@@ -642,6 +686,52 @@ h2{font-size:clamp(34px,4.2vw,50px)}
   </div>
 </section>
 
+<section id="faq" class="section faq">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Frequently Asked Questions</h2>
+      <div class="orn"><i></i></div>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq-tabs" role="tablist" aria-label="FAQ topics">
+      <button role="tab" id="faqtab-conference" aria-controls="faq-conference-list" aria-selected="true">Conference<span class="ct">6</span></button>
+      <button role="tab" id="faqtab-registration" aria-controls="faq-registration-list" aria-selected="false">Registration<span class="ct">5</span></button>
+      <button role="tab" id="faqtab-travel" aria-controls="faq-travel-list" aria-selected="false">Travel &amp; Lodging<span class="ct">5</span></button>
+      <button role="tab" id="faqtab-week" aria-controls="faq-week-list" aria-selected="false">During the Week<span class="ct">4</span></button>
+      </div>
+      <div class="faq-list" role="tabpanel" id="faq-conference-list" aria-labelledby="faqtab-conference">
+        <details id="faq-dates"><summary>When does the conference begin and end?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>The conference begins on Monday, April 5, 2027, with registration opening at 12:00 PM and the first session beginning at 1:00 PM. The conference concludes on Friday, April 9, at 4:50 PM.</p><p><a href="#schedule">See the full daily schedule.</a></p></div></details>
+        <details id="faq-location"><summary>Where is the conference located?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>The conference will be held at Christ the King Church, 638 Highland Avenue, Fort Thomas, KY 41075 (<a href="https://www.google.com/maps/dir/?api=1&amp;destination=638+Highland+Ave%2C+Fort+Thomas%2C+KY+41075" target="_blank" rel="noopener">directions</a>).</p><p>The church is located in the Greater Cincinnati area, just across the Ohio River from downtown Cincinnati.</p></div></details>
+        <details id="faq-meals"><summary>What meals are included with registration?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>Lunch will be provided Tuesday through Friday (four lunches total). Light refreshments and coffee will be available each morning, with coffee available throughout the day.</p><p>Dinner is not included, so attendees are free to explore the many restaurants in the surrounding Cincinnati and Northern Kentucky area.</p></div></details>
+        <details id="faq-family"><summary>Is this a family conference?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>The conference is primarily designed for pastors and men interested in studying the Second London Baptist Confession of Faith. We especially encourage fathers to consider bringing their older children who would benefit from the teaching.</p></div></details>
+        <details id="faq-audience"><summary>Who is this conference intended for?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>The Faith We Confess is primarily a pastors’ conference, but it is open to anyone interested in studying the doctrines of the Second London Baptist Confession of Faith.</p><p>Whether you’re a pastor, elder, seminarian, or simply someone who desires a deeper understanding of these biblical truths, you’re welcome to join us.</p></div></details>
+        <details id="faq-confession"><summary>Will the entire Second London Baptist Confession be covered?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>Yes! Our goal is to work through all 32 chapters of the Second London Baptist Confession of Faith throughout the five-day conference.</p><p>Each session will examine the biblical doctrines expressed in the Confession, with a particular emphasis on their application to the life and ministry of the local church.</p></div></details>
+      </div>
+      <div class="faq-list" role="tabpanel" id="faq-registration-list" aria-labelledby="faqtab-registration" hidden>
+        <details id="faq-partial"><summary>Can I register for just one or two days?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>Registration covers the entire conference, and we do not offer discounted single-day or partial-conference registrations. You’re welcome to attend whichever days your schedule allows, but the registration fee remains the same regardless of how many days you attend.</p></div></details>
+        <details id="faq-students"><summary>Are there special registration rates for seminary students?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>Yes! We offer a discounted registration rate of $249 for seminary students.</p></div></details>
+        <details id="faq-groups"><summary>Are there discounts for groups attending from the same church?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>We do not currently offer group discounts. Registration is priced individually, regardless of how many people attend from the same church.</p></div></details>
+        <details id="faq-deadline"><summary>Is there a registration deadline?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>We encourage attendees to register as early as possible. Registration will remain open as space allows, but we recommend securing your spot early and making travel arrangements in advance.</p></div></details>
+        <details id="faq-refunds"><summary>What is the cancellation or refund policy?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>We understand that plans sometimes change. Registrations may be canceled according to the following schedule:</p><ul><li><b>On or before December 5, 2026:</b> Full refund, less a 10% administrative processing fee.</li><li><b>December 6, 2026 – February 5, 2027:</b> 50% refund.</li><li><b>After February 5, 2027:</b> No refunds will be issued.</li></ul><p>Registrations may also be transferred to another person through March 5, 2027. To request a transfer, please email <a href="mailto:info@cf.life">info@cf.life</a> with the updated attendee information.</p></div></details>
+      </div>
+      <div class="faq-list" role="tabpanel" id="faq-travel-list" aria-labelledby="faqtab-travel" hidden>
+        <details id="faq-hotels"><summary>Are there recommended hotels for the conference?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>Yes! We’ve arranged discounted group rates at select hotels in the Greater Cincinnati area. Our recommended hotels and booking information are listed in the <a href="#travel">Lodging &amp; Travel section</a> above.</p><p>Most hotels in the surrounding Newport, Covington, and Cincinnati areas are approximately 10–15 minutes from the church.</p><p>We encourage you to book early, as discounted rooms are limited and available on a first-come, first-served basis.</p></div></details>
+        <details id="faq-airport"><summary>What airport should I fly into?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>We recommend flying into Cincinnati/Northern Kentucky International Airport (CVG).</p><p>CVG is approximately 15–20 miles from the conference location, depending on your route, and about a 20–30-minute drive from the church.</p><p>It’s also approximately 14–17 miles from the Hampton Inn &amp; Suites Newport/Cincinnati, one of our recommended hotels.</p></div></details>
+        <details id="faq-shuttle"><summary>Is transportation provided from the airport to the church or hotels?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>We will not be providing an airport shuttle.</p><p>The easiest way to travel from Cincinnati/Northern Kentucky International Airport (CVG) to your hotel or the church is by Uber, Lyft, or rental car.</p><p>For a more economical option, the TANK 2X Airporter bus provides transportation from the airport to downtown Cincinnati for approximately $2 per person. From there, you can arrange an Uber or Lyft to your hotel or the church.</p><p>We also recommend checking with your hotel about available airport transportation.</p></div></details>
+        <details id="faq-rental"><summary>Will I need a rental car during the conference?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>A rental car is recommended but not required.</p><p>The church is approximately 10–15 minutes from many of the hotels in the area. If you’re flying in without a rental car, Uber and Lyft are available throughout the Greater Cincinnati area.</p><p>You may also wish to coordinate rides with other attendees staying at the same hotel.</p></div></details>
+        <details id="faq-parking"><summary>Will parking be available at the church?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>Yes! Free parking is available at Christ the King Church for all conference attendees.</p></div></details>
+      </div>
+      <div class="faq-list" role="tabpanel" id="faq-week-list" aria-labelledby="faqtab-week" hidden>
+        <details id="faq-books"><summary>Will there be books and resources available for purchase?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>Yes! We plan to have a selection of books and theological resources available during the conference, including materials from participating ministries and publishers.</p></div></details>
+        <details id="faq-recordings"><summary>Will conference sessions be recorded?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>Yes! All conference sessions will be recorded, and recordings will be provided to registered attendees following the event. Please allow a few months after the conference for the recordings to be processed and distributed.</p></div></details>
+        <details id="faq-credit"><summary>Will seminary credit be available for attending?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>If you’re interested in receiving seminary credit for attending the conference, we encourage you to contact your seminary directly to inquire about eligibility and any additional requirements.</p></div></details>
+        <details id="faq-restaurants"><summary>Are there restaurants near the church?<span class="pm" aria-hidden="true"></span></summary><div class="a"><p>Yes! There are plenty of great dining options in Fort Thomas, Newport, and the surrounding Cincinnati area, including inexpensive restaurants, casual dining, and upscale options. Here are a few recommendations:</p><div class="eats"><div><h5>Budget-Friendly<span>$10–20 per person</span></h5><ul><li><a href="https://www.google.com/maps/search/?api=1&amp;query=Highland+Square+Deli%2C+Fort+Thomas%2C+KY" target="_blank" rel="noopener">Highland Square Deli</a> – Sandwiches, wraps, soups, and salads, located right next to the church.</li><li><a href="https://www.google.com/maps/search/?api=1&amp;query=Mad+Mike's+Burgers+%26+Fries%2C+Newport%2C+KY" target="_blank" rel="noopener">Mad Mike’s Burgers &amp; Fries</a> – Casual burgers and hand-cut fries in Newport.</li></ul></div><div><h5>Casual Dining<span>$15–30 per person</span></h5><ul><li><a href="https://www.google.com/maps/search/?api=1&amp;query=Padrino%2C+Fort+Thomas%2C+KY" target="_blank" rel="noopener">Padrino Fort Thomas</a> – A popular local Italian restaurant serving pizza, pasta, and sandwiches.</li><li><a href="https://www.google.com/maps/search/?api=1&amp;query=Midway+Cafe%2C+Fort+Thomas%2C+KY" target="_blank" rel="noopener">Midway Cafe</a> – A neighborhood favorite known for its burgers and wings.</li></ul></div><div><h5>Upscale Dining<span>$30–60+ per person</span></h5><ul><li><a href="https://www.google.com/maps/search/?api=1&amp;query=Otto's%2C+Covington%2C+KY" target="_blank" rel="noopener">Otto’s</a> – A well-regarded American bistro in Covington, serving Southern-inspired dishes.</li><li><a href="https://www.google.com/maps/search/?api=1&amp;query=Bouquet+Restaurant%2C+Covington%2C+KY" target="_blank" rel="noopener">Bouquet Restaurant</a> – An upscale, farm-to-table restaurant in Covington offering seasonal dishes.</li></ul></div></div><p>Most of these restaurants are a short drive from the church. We recommend checking hours and making reservations when appropriate.</p></div></details>
+      </div>
+      <p class="faq-more">Still have a question? Email us at <a href="mailto:info@cf.life">info@cf.life</a>. We’d be happy to help!</p>
+    </div>
+  </div>
+</section>
+
 <section id="partner" class="section alt vendors">
   <div class="wrap">
     <p class="eyebrow">Partners &amp; Vendors</p>
@@ -682,6 +772,18 @@ h2{font-size:clamp(34px,4.2vw,50px)}
   if(cur<0) cur=tiers.length-1;
   tiers.forEach(function(t,i){ t.classList.toggle('current',i===cur); t.classList.toggle('past',i<cur); });
   document.getElementById('tierNow').textContent=['Early registration pricing through January\u00a031','Regular pricing through March 21','Last-minute pricing through the conference'][cur];
+  // FAQ: topic tabs + one answer open at a time; #faq-<id> links open that answer
+  var ftabs=[].slice.call(document.querySelectorAll('.faq-tabs [role=tab]'));
+  function fshow(i){ ftabs.forEach(function(t,j){ t.setAttribute('aria-selected', i===j); t.tabIndex=i===j?0:-1; document.getElementById(t.getAttribute('aria-controls')).hidden = i!==j; }); }
+  ftabs.forEach(function(t,i){
+    t.addEventListener('click',function(){ fshow(i); t.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'}); });
+    t.addEventListener('keydown',function(e){ var k=null; if(e.key==='ArrowRight')k=(i+1)%ftabs.length; if(e.key==='ArrowLeft')k=(i-1+ftabs.length)%ftabs.length; if(k!==null){fshow(k);ftabs[k].focus();} });
+  });
+  fshow(0);
+  var fitems=[].slice.call(document.querySelectorAll('.faq-list details'));
+  fitems.forEach(function(d){ d.addEventListener('toggle',function(){ if(d.open) fitems.forEach(function(o){ if(o!==d) o.open=false; }); }); });
+  function fhash(){ var d=location.hash && document.getElementById(location.hash.slice(1)); if(!d || d.tagName!=='DETAILS') return; var p=d.closest('.faq-list'); fshow(ftabs.findIndex(function(t){return t.getAttribute('aria-controls')===p.id;})); d.open=true; d.scrollIntoView({block:'start'}); }
+  window.addEventListener('hashchange',fhash); fhash();
   var links=[].slice.call(document.querySelectorAll('.subnav a.tab'));
   var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
   function onScroll(){ var y=window.scrollY+140, idx=-1; secs.forEach(function(s,i){ if(s && s.getBoundingClientRect().top+window.scrollY<=y) idx=i; }); links.forEach(function(a,i){ a.classList.toggle('on',i===idx); }); }
