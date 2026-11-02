@@ -122,6 +122,12 @@ h2{font-size:clamp(34px,4.2vw,50px)}
 .promo{margin:0 0 clamp(36px,4.4vw,52px);scroll-margin-top:80px}
 .promo-frame{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:#1d1813;box-shadow:0 0 0 1px var(--rule),0 18px 40px -22px rgba(42,35,28,.55)}
 .promo-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.promo-sound{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;width:100%;height:100%;margin:0;padding:0;border:0;background:rgba(29,24,19,.18);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.promo-sound[hidden]{display:none}
+.promo-sound span{display:inline-flex;align-items:center;gap:12px;padding:16px 28px 16px 22px;border-radius:999px;background:rgba(29,24,19,.86);color:#fff;font-family:var(--display);font-size:clamp(20px,2.4vw,26px);letter-spacing:.02em;box-shadow:0 10px 30px -10px rgba(0,0,0,.6);transition:transform .2s}
+.promo-sound:hover span,.promo-sound:focus-visible span{transform:scale(1.04)}
+.promo-sound svg{width:30px;height:30px;flex:none}
+@media (max-width:720px){.promo-sound span{font-size:19px;padding:12px 22px 12px 16px;gap:10px}.promo-sound svg{width:24px;height:24px}}
 .overview .lead{font-size:clamp(22px,2.4vw,27px);line-height:1.5;color:var(--ink);margin:0 0 28px}
 .overview .lead::first-letter{font-family:var(--display);float:left;font-size:3.3em;line-height:.82;padding:.06em .08em 0 0;color:var(--red)}
 .overview p{margin:0 0 22px;font-size:20px;line-height:1.7}
@@ -461,7 +467,7 @@ h2{font-size:clamp(34px,4.2vw,50px)}
 <section id="overview" class="section overview">
   <div class="wrap narrow">
     <figure id="promo" class="promo">
-      <div class="promo-frame"><iframe src="https://player.vimeo.com/video/1240408151?h=d2090ec51f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" title="The Faith We Confess Promo 1"></iframe></div>
+      <div class="promo-frame"><iframe src="https://player.vimeo.com/video/1240408151?h=d2090ec51f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" title="The Faith We Confess Promo 1"></iframe><button class="promo-sound" type="button" hidden aria-label="Turn on sound"><span><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19.5 5.5a9 9 0 0 1 0 13"/></svg><b>Tap for sound</b></span></button></div>
     </figure>
     <p class="lead">In 1677, English Particular Baptists published what would become known as the Second London Baptist Confession of Faith, setting forth with remarkable clarity their understanding of the great doctrines of Scripture. Twelve years later, in 1689, Baptist churches were able to publicly own and affirm that confession together.</p>
     <p>In 2027, 350 years after its first publication, pastors will gather for <em>The Faith We Confess: 350 Years of the Second London Baptist Confession of Faith.</em> This conference is not simply an opportunity to commemorate an important moment in Baptist history. It is an opportunity to consider again the biblical truths these men confessed and to ask what it means for pastors and churches to believe, preach, defend, and live those same truths faithfully in our own generation.</p>
@@ -846,6 +852,31 @@ h2{font-size:clamp(34px,4.2vw,50px)}
   var faces=document.querySelector('a.faces'), spk=document.getElementById('speakers');
   if(faces && spk) faces.addEventListener('click',function(e){ e.preventDefault(); spk.scrollIntoView({behavior:'smooth',block:'start'}); sethash('#speakers'); });
   // Review-only toggles: ?spot=redbox puts the strip under the menu; ?tone=color shows colour photos
+  // ?play=1 (email links, 2026-11-02): autoplay the promo and land on it. Vimeo itself falls back to MUTED autoplay
+  // when the browser blocks sound (Safari/iOS, most first-visit Chrome); then a big "Tap for sound" button unmutes in one tap.
+  // Without play=1 nothing changes.
+  var pfig=document.getElementById('promo');
+  if(pfig && /[?&]play=1(&|$)/.test(location.search)){
+    var pifr=pfig.querySelector('iframe'), psnd=pfig.querySelector('.promo-sound'), plab=psnd&&psnd.querySelector('b'), pl=null;
+    pifr.setAttribute('loading','eager');
+    if(!/[?&]autoplay=1/.test(pifr.src)) pifr.src=pifr.src+'&autoplay=1';
+    if(!location.hash || location.hash==='#promo'){ var pgo=function(){ pfig.scrollIntoView({block:'start',behavior:'instant'}); }; pgo(); window.addEventListener('load',function(){ (document.fonts?document.fonts.ready:Promise.resolve()).then(pgo); }); }
+    var pshow=function(txt){ if(!psnd) return; plab.textContent=txt; psnd.setAttribute('aria-label',txt==='Tap to play'?'Play the video with sound':'Turn on sound'); psnd.hidden=false; };
+    var pcheck=function(){ if(!pl) return; Promise.all([pl.getPaused(),pl.getMuted(),pl.getVolume()]).then(function(r){ if(r[0]) pshow('Tap to play'); else if(r[1]||r[2]===0) pshow('Tap for sound'); else if(psnd) psnd.hidden=true; }).catch(function(){}); };
+    var pjs=document.createElement('script'); pjs.src='https://player.vimeo.com/api/player.js'; pjs.async=true;
+    pjs.onload=function(){
+      pl=new Vimeo.Player(pifr);
+      pl.on('playing',pcheck);
+      pl.on('volumechange',function(d){ if(d && d.volume>0 && psnd && plab.textContent==='Tap for sound') pl.getMuted().then(function(m){ if(!m) psnd.hidden=true; }); });
+      pl.ready().then(function(){ setTimeout(pcheck,3500); });   // still paused after 3.5 s (e.g. iOS Low Power Mode): offer a play button
+    };
+    document.head.appendChild(pjs);
+    if(psnd) psnd.addEventListener('click',function(){
+      psnd.hidden=true; if(!pl) return;
+      pl.setMuted(false).catch(function(){}); pl.setVolume(1).catch(function(){});
+      pl.getPaused().then(function(p){ if(p) return pl.play(); }).catch(function(){});
+    });
+  }
   var qs=location.search;
   if(faces && /[?&]spot=redbox/.test(qs)){ document.body.classList.add('spot-redbox'); var ow=document.querySelector('#overview .wrap'); ow.insertBefore(faces, ow.firstChild); }
   if(/[?&]tone=color/.test(qs)) document.body.classList.add('tone-color');
