@@ -61,6 +61,36 @@ h2{font-size:clamp(34px,4.2vw,50px)}
 .btn-line:hover{background:var(--ink);color:var(--paper)}
 .btn .arr{font-family:system-ui,sans-serif;letter-spacing:0}
 
+/* Speaker strip (David 2026-11-02): faces only, static, in the first screen; links to #speakers */
+.faces{display:block;width:max-content;max-width:100%;margin:34px auto 0;text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent}
+.faces-label{display:flex;align-items:center;justify-content:center;gap:14px;font:600 12.5px/1 var(--body);letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin:0 0 16px;transition:color .2s}
+.faces-label::before,.faces-label::after{content:"";width:46px;height:1px;background:var(--ink);opacity:.4}
+.faces-label i{width:6px;height:6px;background:var(--red);transform:rotate(45deg);flex:none;margin:0 -2px}
+.faces-row{display:flex;justify-content:center;gap:clamp(8px,1.5vw,22px);padding:4px}
+.face{--d:clamp(56px,7.2vw,88px);flex:none;width:var(--d);height:var(--d);border-radius:50%;overflow:hidden;background:var(--paper-2);box-shadow:0 0 0 3px var(--paper),0 0 0 4px rgba(42,35,28,.34);transition:transform .25s,box-shadow .25s}
+.face img{width:100%;height:100%;object-fit:cover;object-position:center 24%;transform:scale(1.12);transform-origin:center 26%;filter:grayscale(1) sepia(.3) contrast(1.05) brightness(1.03);transition:filter .3s}
+.faces:hover .face img,.faces:focus-visible .face img{filter:none}
+.faces:hover .face{box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--red)}
+.faces:hover .faces-label{color:var(--red)}
+.tone-color .face img{filter:none}
+.spot-redbox #overview{padding-top:38px}
+.spot-redbox .faces{margin:0 auto 52px}
+@media (min-width:721px) and (max-height:860px){
+  /* short laptop screens: tighten the hero so the faces still land in the first screen */
+  .hero .wrap{padding-top:22px;padding-bottom:18px;min-height:0}
+  .hero .lockup{width:min(46%,470px)}
+  .faces{margin-top:24px}
+  .faces-label{margin-bottom:12px}
+  .face{--d:clamp(56px,6.4vw,78px)}
+  .intro{padding-bottom:34px}
+}
+@media (min-width:721px) and (max-height:780px){
+  .hero .lockup{width:min(46%,430px)}
+  .btns{margin-top:20px}
+  .faces{margin-top:20px}
+  .face{--d:clamp(56px,5.6vw,72px)}
+}
+
 .subnav{position:sticky;top:0;z-index:50;background:rgba(244,235,216,.95);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
 .subnav .wrap{display:flex;align-items:center;gap:18px;height:58px}
 .subnav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1}
@@ -333,6 +363,11 @@ h2{font-size:clamp(34px,4.2vw,50px)}
   .faq-list summary{font-size:18.5px;padding:14px 0;gap:12px}
   .faq-list .a{font-size:16.5px}
   .faq-list .eats{grid-template-columns:1fr}
+  .faces{width:auto;margin:28px -20px 0}
+  .faces-label{margin-bottom:12px}
+  .faces-row{justify-content:flex-start;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;scroll-padding:0 20px;padding:4px 20px 6px;gap:13px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 44px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 44px),transparent)}
+  .faces-row::-webkit-scrollbar{display:none}
+  .face{--d:68px;scroll-snap-align:start}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
@@ -357,6 +392,20 @@ h2{font-size:clamp(34px,4.2vw,50px)}
       <a class="btn btn-red" href="#register">Register Now</a>
       <a class="btn btn-line" href="#overview">Explore the Conference</a>
     </div>
+    <a class="faces" href="#speakers" aria-label="Meet the speakers">
+      <span class="faces-label"><i></i>Speakers<i></i></span>
+      <span class="faces-row" aria-hidden="true">
+        <span class="face"><img src="https://cfl-mango.s3.us-east-1.amazonaws.com/assets/people/60ca33a0e7346d3c2b733ed5/image.jpg?updated=1715362369052" alt="" width="88" height="88" decoding="async"></span>
+        <span class="face"><img src="https://cfl-mango.s3.amazonaws.com/assets/people/60ca3356e7346d3c2b733e9d/image.jpg?updated=1660063242578" alt="" width="88" height="88" decoding="async"></span>
+        <span class="face"><img src="https://cfl-mango.s3.amazonaws.com/assets/people/60ca3431e7346d3c2b733f3d/image.jpg?updated=1690487791278" alt="" width="88" height="88" decoding="async"></span>
+        <span class="face"><img src="https://cfl-mango.s3.us-east-1.amazonaws.com/assets/people/60ca31e5e7346d3c2b733d93/image.jpg?updated=1788381116743" alt="" width="88" height="88" decoding="async"></span>
+        <span class="face"><img src="https://cfl-mango.s3.us-east-1.amazonaws.com/assets/people/67ab67c89682f4ec5681efb1/image.jpg?updated=1759500903660" alt="" width="88" height="88" decoding="async"></span>
+        <span class="face"><img src="https://cfl-mango.s3.us-east-1.amazonaws.com/assets/people/67f4ff26cea1609807d1e34a/image.jpg?updated=1744109519241" alt="" width="88" height="88" decoding="async"></span>
+        <span class="face"><img src="https://cfl-mango.s3.amazonaws.com/assets/people/6137ff13d8362c1d0e9ea8f4/image.jpg?updated=1639761625638" alt="" width="88" height="88" decoding="async"></span>
+        <span class="face"><img src="https://cfl-mango.s3.amazonaws.com/assets/people/60ca32ace7346d3c2b733e3e/image.jpg?updated=1682705537364" alt="" width="88" height="88" decoding="async"></span>
+        <span class="face"><img src="https://cfl-mango.s3.us-east-1.amazonaws.com/assets/people/6734fa7111de6e70d46f614a/image.jpg?updated=1731525234284" alt="" width="88" height="88" decoding="async"></span>
+      </span>
+    </a>
   </div>
 </section>
 
@@ -789,6 +838,13 @@ h2{font-size:clamp(34px,4.2vw,50px)}
   var links=[].slice.call(document.querySelectorAll('.subnav a.tab'));
   var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
   links.forEach(function(a,i){ a.addEventListener('click',function(e){ if(!secs[i]) return; e.preventDefault(); secs[i].scrollIntoView({behavior:'smooth',block:'start'}); sethash(a.getAttribute('href')); }); });
+  // Speaker strip: same behaviour as the Speakers tab
+  var faces=document.querySelector('a.faces'), spk=document.getElementById('speakers');
+  if(faces && spk) faces.addEventListener('click',function(e){ e.preventDefault(); spk.scrollIntoView({behavior:'smooth',block:'start'}); sethash('#speakers'); });
+  // Review-only toggles: ?spot=redbox puts the strip under the menu; ?tone=color shows colour photos
+  var qs=location.search;
+  if(faces && /[?&]spot=redbox/.test(qs)){ document.body.classList.add('spot-redbox'); var ow=document.querySelector('#overview .wrap'); ow.insertBefore(faces, ow.firstChild); }
+  if(/[?&]tone=color/.test(qs)) document.body.classList.add('tone-color');
   function onScroll(){ var y=window.scrollY+140, idx=-1; secs.forEach(function(s,i){ if(s && s.getBoundingClientRect().top+window.scrollY<=y) idx=i; }); links.forEach(function(a,i){ a.classList.toggle('on',i===idx); }); }
   window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 })();
